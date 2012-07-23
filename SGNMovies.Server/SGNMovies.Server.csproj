@@ -110,11 +110,19 @@
     <Compile Include="Providers\GalaxyProvider.cs" />
     <Compile Include="Providers\MegaStarProvider.cs" />
     <Compile Include="Utilities\Helper.cs" />
+    <Compile Include="Views\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Models\SGNMovies.edmx.sql" />
+    <Content Include="Views\Home.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -164,7 +172,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>57024</DevelopmentServerPort>
+          <DevelopmentServerPort>1614</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
