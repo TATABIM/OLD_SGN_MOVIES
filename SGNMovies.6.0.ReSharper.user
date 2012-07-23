@@ -1,0 +1,28 @@
+<Configuration>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="0F81E526-1F20-4321-B31F-B0486CD65AB2/d:Providers/f:GalaxyProvider.cs" caret="1876" fromTop="25" />
+      <File id="0F81E526-1F20-4321-B31F-B0486CD65AB2/d:Utilities/f:Helper.cs" caret="721" fromTop="24" />
+      <File id="0F81E526-1F20-4321-B31F-B0486CD65AB2/d:Controllers/f:SessionController.cs" caret="528" fromTop="10" />
+    </RecentFiles>
+    <RecentEdits />
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+</Configuration>

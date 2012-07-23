@@ -1,0 +1,51 @@
+D:\sgnmovies-server\SGNMovies.Server\bin\SGNMovies.Server.dll
+D:\sgnmovies-server\SGNMovies.Server\bin\SGNMovies.Server.pdb
+D:\sgnmovies-server\SGNMovies.Server\bin\Elmah.dll
+D:\sgnmovies-server\SGNMovies.Server\bin\HtmlAgilityPack.dll
+D:\sgnmovies-server\SGNMovies.Server\bin\log4net.dll
+D:\sgnmovies-server\SGNMovies.Server\bin\Microsoft.Web.Infrastructure.dll
+D:\sgnmovies-server\SGNMovies.Server\bin\Ninject.dll
+D:\sgnmovies-server\SGNMovies.Server\bin\Ninject.Web.Mvc.dll
+D:\sgnmovies-server\SGNMovies.Server\bin\WebActivator.dll
+D:\sgnmovies-server\SGNMovies.Server\bin\log4net.xml
+D:\sgnmovies-server\SGNMovies.Server\bin\Ninject.pdb
+D:\sgnmovies-server\SGNMovies.Server\bin\Ninject.xml
+D:\sgnmovies-server\SGNMovies.Server\bin\Ninject.Web.Mvc.pdb
+D:\sgnmovies-server\SGNMovies.Server\bin\Ninject.Web.Mvc.xml
+D:\sgnmovies-server\SGNMovies.Server\obj\Debug\ResolveAssemblyReference.cache
+D:\sgnmovies-server\SGNMovies.Server\obj\Debug\SGNMovies.Server.dll
+D:\sgnmovies-server\SGNMovies.Server\obj\Debug\SGNMovies.Server.pdb
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\SGNMovies.Server.dll
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\SGNMovies.Server.pdb
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\Elmah.dll
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\HtmlAgilityPack.dll
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\log4net.dll
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\Ninject.dll
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\Ninject.Web.Mvc.dll
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\WebActivator.dll
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\log4net.xml
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\Ninject.pdb
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\Ninject.xml
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\Ninject.Web.Mvc.pdb
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\bin\Ninject.Web.Mvc.xml
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\obj\Debug\SGNMovies.Server.dll
+C:\Users\admin\Desktop\sgnmovies-server\SGNMovies.Server\obj\Debug\SGNMovies.Server.pdb
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\SGNMovies.Server.dll
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\SGNMovies.Server.pdb
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\Elmah.dll
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\HtmlAgilityPack.dll
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\log4net.dll
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\Ninject.dll
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\Ninject.Web.Mvc.dll
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\WebActivator.dll
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\log4net.xml
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\Ninject.pdb
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\Ninject.xml
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\Ninject.Web.Mvc.pdb
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\bin\Ninject.Web.Mvc.xml
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\obj\Debug\SGNMovies.Server.dll
+C:\Users\admin\Documents\Visual Studio 2010\Projects\OLD_SGN_MOVIES\SGNMovies.Server\obj\Debug\SGNMovies.Server.pdb
