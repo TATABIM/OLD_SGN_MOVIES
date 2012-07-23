@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SGNMovie.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="SGNMovieStoreContainer">
+    <EntitySet Name="Providers" EntityType="SGNMovie.Store.Providers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Cinemas" EntityType="SGNMovie.Store.Cinemas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Movies" EntityType="SGNMovie.Store.Movies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SessionTimes" EntityType="SGNMovie.Store.SessionTimes" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CinemaSessionTime" Association="SGNMovie.Store.CinemaSessionTime">
+      <End Role="Cinema" EntitySet="Cinemas" />
+      <End Role="SessionTime" EntitySet="SessionTimes" />
+    </AssociationSet>
+    <AssociationSet Name="CinemaProvider" Association="SGNMovie.Store.CinemaProvider">
+      <End Role="Cinema" EntitySet="Cinemas" />
+      <End Role="Provider" EntitySet="Providers" />
+    </AssociationSet>
+    <AssociationSet Name="MovieProvider" Association="SGNMovie.Store.MovieProvider">
+      <End Role="Movie" EntitySet="Movies" />
+      <End Role="Provider" EntitySet="Providers" />
+    </AssociationSet>
+    <AssociationSet Name="MovieSessionTime" Association="SGNMovie.Store.MovieSessionTime">
+      <End Role="Movie" EntitySet="Movies" />
+      <End Role="SessionTime" EntitySet="SessionTimes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Providers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="HostUrl" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Cinema_Id" Type="int" Nullable="false" />
+    <Property Name="Movie_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cinemas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DisplayName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Latitude" Type="float" Nullable="false" />
+    <Property Name="Longitude" Type="float" Nullable="false" />
+    <Property Name="ImageUrl" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="WebId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Movies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Var" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Director" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Duration" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Genre" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Cast" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Language" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Producer" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Is3d" Type="bit" Nullable="true" />
+    <Property Name="IsNowShowing" Type="bit" Nullable="false" />
+    <Property Name="InfoUrl" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ImageUrl" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="TrailerUrl" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="SessionTimes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Time" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Cinema_Id" Type="int" Nullable="false" />
+    <Property Name="Movie_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CinemaSessionTime">
+    <End Role="Cinema" Type="SGNMovie.Store.Cinemas" Multiplicity="1" />
+    <End Role="SessionTime" Type="SGNMovie.Store.SessionTimes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinema">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SessionTime">
+        <PropertyRef Name="Cinema_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CinemaProvider">
+    <End Role="Cinema" Type="SGNMovie.Store.Cinemas" Multiplicity="1" />
+    <End Role="Provider" Type="SGNMovie.Store.Providers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cinema">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Provider">
+        <PropertyRef Name="Cinema_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MovieProvider">
+    <End Role="Movie" Type="SGNMovie.Store.Movies" Multiplicity="1" />
+    <End Role="Provider" Type="SGNMovie.Store.Providers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movie">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Provider">
+        <PropertyRef Name="Movie_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MovieSessionTime">
+    <End Role="Movie" Type="SGNMovie.Store.Movies" Multiplicity="1" />
+    <End Role="SessionTime" Type="SGNMovie.Store.SessionTimes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movie">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SessionTime">
+        <PropertyRef Name="Movie_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SGNMovie" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="SGNMovieContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Providers" EntityType="SGNMovie.Provider" />
+          <EntitySet Name="Cinemas" EntityType="SGNMovie.Cinema" />
+          <EntitySet Name="Movies" EntityType="SGNMovie.Movie" />
+          <EntitySet Name="SessionTimes" EntityType="SGNMovie.SessionTime" />
+          <AssociationSet Name="CinemaSessionTime" Association="SGNMovie.CinemaSessionTime">
+            <End Role="Cinema" EntitySet="Cinemas" />
+            <End Role="SessionTime" EntitySet="SessionTimes" />
+          </AssociationSet>
+          <AssociationSet Name="CinemaProvider" Association="SGNMovie.CinemaProvider">
+            <End Role="Cinema" EntitySet="Cinemas" />
+            <End Role="Provider" EntitySet="Providers" />
+          </AssociationSet>
+          <AssociationSet Name="MovieProvider" Association="SGNMovie.MovieProvider">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="Provider" EntitySet="Providers" />
+          </AssociationSet>
+          <AssociationSet Name="MovieSessionTime" Association="SGNMovie.MovieSessionTime">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="SessionTime" EntitySet="SessionTimes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Provider">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="HostUrl" Nullable="false" />
+          <NavigationProperty Name="Cinema" Relationship="SGNMovie.CinemaProvider" FromRole="Provider" ToRole="Cinema" />
+          <NavigationProperty Name="Movie" Relationship="SGNMovie.MovieProvider" FromRole="Provider" ToRole="Movie" />
+        </EntityType>
+        <EntityType Name="Cinema">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="DisplayName" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="String" Name="Phone" Nullable="false" />
+          <Property Type="Double" Name="Latitude" Nullable="false" />
+          <Property Type="Double" Name="Longitude" Nullable="false" />
+          <Property Type="String" Name="ImageUrl" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="SessionTimes" Relationship="SGNMovie.CinemaSessionTime" FromRole="Cinema" ToRole="SessionTime" />
+          <NavigationProperty Name="Providers" Relationship="SGNMovie.CinemaProvider" FromRole="Cinema" ToRole="Provider" />
+          <Property Type="Int32" Name="WebId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Var" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" />
+          <Property Type="String" Name="Director" Nullable="true" />
+          <Property Type="String" Name="Duration" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="Genre" Nullable="true" />
+          <Property Type="String" Name="Cast" Nullable="true" />
+          <Property Type="String" Name="Language" Nullable="true" />
+          <Property Type="String" Name="Producer" Nullable="true" />
+          <Property Type="Boolean" Name="Is3d" Nullable="true" />
+          <Property Type="Boolean" Name="IsNowShowing" Nullable="false" />
+          <Property Type="String" Name="InfoUrl" Nullable="false" />
+          <Property Type="String" Name="ImageUrl" Nullable="true" />
+          <Property Type="String" Name="TrailerUrl" Nullable="true" />
+          <NavigationProperty Name="Providers" Relationship="SGNMovie.MovieProvider" FromRole="Movie" ToRole="Provider" />
+          <NavigationProperty Name="SessionTimes" Relationship="SGNMovie.MovieSessionTime" FromRole="Movie" ToRole="SessionTime" />
+        </EntityType>
+        <EntityType Name="SessionTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Date" Nullable="false" />
+          <Property Type="String" Name="Time" Nullable="false" />
+          <NavigationProperty Name="Cinema" Relationship="SGNMovie.CinemaSessionTime" FromRole="SessionTime" ToRole="Cinema" />
+          <NavigationProperty Name="Movie" Relationship="SGNMovie.MovieSessionTime" FromRole="SessionTime" ToRole="Movie" />
+        </EntityType>
+        <Association Name="CinemaSessionTime">
+          <End Type="SGNMovie.Cinema" Role="Cinema" Multiplicity="1" />
+          <End Type="SGNMovie.SessionTime" Role="SessionTime" Multiplicity="*" />
+        </Association>
+        <Association Name="CinemaProvider">
+          <End Type="SGNMovie.Cinema" Role="Cinema" Multiplicity="1" />
+          <End Type="SGNMovie.Provider" Role="Provider" Multiplicity="*" />
+        </Association>
+        <Association Name="MovieProvider">
+          <End Type="SGNMovie.Movie" Role="Movie" Multiplicity="1" />
+          <End Type="SGNMovie.Provider" Role="Provider" Multiplicity="*" />
+        </Association>
+        <Association Name="MovieSessionTime">
+          <End Type="SGNMovie.Movie" Role="Movie" Multiplicity="1" />
+          <End Type="SGNMovie.SessionTime" Role="SessionTime" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SGNMovieStoreContainer" CdmEntityContainer="SGNMovieContainer">
+    <EntitySetMapping Name="Providers">
+      <EntityTypeMapping TypeName="IsTypeOf(SGNMovie.Provider)">
+        <MappingFragment StoreEntitySet="Providers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="HostUrl" ColumnName="HostUrl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cinemas">
+      <EntityTypeMapping TypeName="IsTypeOf(SGNMovie.Cinema)">
+        <MappingFragment StoreEntitySet="Cinemas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="WebId" ColumnName="WebId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Movies">
+      <EntityTypeMapping TypeName="IsTypeOf(SGNMovie.Movie)">
+        <MappingFragment StoreEntitySet="Movies">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Var" ColumnName="Var" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Director" ColumnName="Director" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Genre" ColumnName="Genre" />
+          <ScalarProperty Name="Cast" ColumnName="Cast" />
+          <ScalarProperty Name="Language" ColumnName="Language" />
+          <ScalarProperty Name="Producer" ColumnName="Producer" />
+          <ScalarProperty Name="Is3d" ColumnName="Is3d" />
+          <ScalarProperty Name="IsNowShowing" ColumnName="IsNowShowing" />
+          <ScalarProperty Name="InfoUrl" ColumnName="InfoUrl" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+          <ScalarProperty Name="TrailerUrl" ColumnName="TrailerUrl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SessionTimes">
+      <EntityTypeMapping TypeName="IsTypeOf(SGNMovie.SessionTime)">
+        <MappingFragment StoreEntitySet="SessionTimes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CinemaSessionTime" TypeName="SGNMovie.CinemaSessionTime" StoreEntitySet="SessionTimes">
+      <EndProperty Name="Cinema">
+        <ScalarProperty Name="Id" ColumnName="Cinema_Id" />
+      </EndProperty>
+      <EndProperty Name="SessionTime">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CinemaProvider" TypeName="SGNMovie.CinemaProvider" StoreEntitySet="Providers">
+      <EndProperty Name="Cinema">
+        <ScalarProperty Name="Id" ColumnName="Cinema_Id" />
+      </EndProperty>
+      <EndProperty Name="Provider">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MovieProvider" TypeName="SGNMovie.MovieProvider" StoreEntitySet="Providers">
+      <EndProperty Name="Movie">
+        <ScalarProperty Name="Id" ColumnName="Movie_Id" />
+      </EndProperty>
+      <EndProperty Name="Provider">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MovieSessionTime" TypeName="SGNMovie.MovieSessionTime" StoreEntitySet="SessionTimes">
+      <EndProperty Name="Movie">
+        <ScalarProperty Name="Id" ColumnName="Movie_Id" />
+      </EndProperty>
+      <EndProperty Name="SessionTime">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="SGNMovie" >
+        <EntityTypeShape EntityType="SGNMovie.Provider" Width="1.5" PointX="5.625" PointY="1.125" Height="1.59568359375" />
+        <EntityTypeShape EntityType="SGNMovie.Cinema" Width="1.5" PointX="3.125" PointY="1.125" Height="2.7494921874999996" />
+        <EntityTypeShape EntityType="SGNMovie.Movie" Width="1.5" PointX="8.375" PointY="1.25" Height="4.0956022135416656" />
+        <EntityTypeShape EntityType="SGNMovie.SessionTime" Width="1.5" PointX="5.625" PointY="3.875" Height="1.5956835937499996" />
+        <AssociationConnector Association="SGNMovie.CinemaSessionTime">
+          <ConnectorPoint PointX="3.875" PointY="4.0667936197916656" />
+          <ConnectorPoint PointX="3.875" PointY="4.9610405390624983" />
+          <ConnectorPoint PointX="5.625" PointY="4.9610405390624983" />
+        </AssociationConnector>
+        <AssociationConnector Association="SGNMovie.CinemaProvider">
+          <ConnectorPoint PointX="4.625" PointY="2.0189925130208337" />
+          <ConnectorPoint PointX="5.625" PointY="2.0189925130208337" />
+        </AssociationConnector>
+        <AssociationConnector Association="SGNMovie.MovieProvider">
+          <ConnectorPoint PointX="8.375" PointY="2.1776432291666667" />
+          <ConnectorPoint PointX="7.125" PointY="2.1776432291666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="SGNMovie.MovieSessionTime">
+          <ConnectorPoint PointX="8.375" PointY="4.7064518229166667" />
+          <ConnectorPoint PointX="7.125" PointY="4.7064518229166667" />
+        </AssociationConnector>
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
