@@ -79,7 +79,7 @@ namespace SGNMovies.Server.Providers
                                         movie.Language = HttpUtility.HtmlDecode(xdoc.DocumentNode.SelectNodes("//span[@id='ContentPlaceHolder1_lblLanguage']").FirstOrDefault().InnerText);
                                         movie.TrailerUrl = GetTrailerUrl(xdoc.DocumentNode);
                                         HtmlNode var = xdoc.DocumentNode.SelectNodes("//input[@id='ContentPlaceHolder1_hid_movie']").FirstOrDefault();
-                                        movie.Var = var.GetAttributeValue("value", string.Empty);
+                                        movie.MovieWebId = var.GetAttributeValue("value", string.Empty);
                                     }
                                 });
             return results;
@@ -89,11 +89,11 @@ namespace SGNMovies.Server.Providers
         {   
             foreach (var cinema in cinemas)
             {
-                Stream s = WebConnection.GetUrl(string.Format(CINEMA_TO_FILM, cinema.WebId), null);
+                Stream s = WebConnection.GetUrl(string.Format(CINEMA_TO_FILM, cinema.CinemaWebId), null);
                 var movies = GetMoviesFromCinema(s);
                 foreach (var movie in movies)
                 {
-                    s = WebConnection.GetUrl(string.Format(CINEME_FILM_TO_SESSIONTIME, cinema.WebId, movie.Var), null);
+                    s = WebConnection.GetUrl(string.Format(CINEME_FILM_TO_SESSIONTIME, cinema.CinemaWebId, movie.MovieWebId), null);
                     var dates = LoadDateTimeFromCinemaMovie(s);
                     if (dates != null)
                     {
@@ -103,8 +103,8 @@ namespace SGNMovies.Server.Providers
                             {
                                 yield return new SessionTime
                                                  {
-                                                     Cinema = cinema,
-                                                     Movie = movie,
+                                                     //Cinema = cinema,
+                                                     //Movie = movie,
                                                      Date = date.ShowingDate,
                                                      Time = time.DateTime
                                                  };
@@ -117,15 +117,15 @@ namespace SGNMovies.Server.Providers
 
         public IEnumerable<SessionTime> LoadSessionTimes(ISGNMovies sgnMovies)
         {
-            IEnumerable<Cinema> cinemas = sgnMovies.Cinemas.Where(c => c.WebId > 1000);
+            IEnumerable<Cinema> cinemas = sgnMovies.Cinemas.Where(c => Int32.Parse(c.CinemaWebId) > 1000);
             foreach (var cinema in cinemas)
             {
-                Stream s = WebConnection.GetUrl(string.Format(CINEMA_TO_FILM, cinema.WebId), null);
+                Stream s = WebConnection.GetUrl(string.Format(CINEMA_TO_FILM, cinema.CinemaWebId), null);
                 IEnumerable<Movie> tmp = GetMoviesFromCinema(s);
                 IEnumerable<Movie> movies = LoadMoviesFromVars(sgnMovies.Movies, tmp);
                 foreach (var movie in movies)
                 {
-                    s = WebConnection.GetUrl(string.Format(CINEME_FILM_TO_SESSIONTIME, cinema.WebId, movie.Var), null);
+                    s = WebConnection.GetUrl(string.Format(CINEME_FILM_TO_SESSIONTIME, cinema.CinemaWebId, movie.MovieWebId), null);
                     IEnumerable<ShowingDateModel> dates = LoadDateTimeFromCinemaMovie(s);
                     if (dates != null)
                     {
@@ -135,8 +135,8 @@ namespace SGNMovies.Server.Providers
                             {
                                 yield return new SessionTime
                                 {
-                                    Cinema = cinema,
-                                    Movie = movie,
+                                    //Cinema = cinema,
+                                    //Movie = movie,
                                     Date = date.ShowingDate,
                                     Time = time.DateTime
                                 };
@@ -166,9 +166,9 @@ namespace SGNMovies.Server.Providers
                 Duration = HttpUtility.HtmlDecode(info[2]).Replace("Thời lượng:", "").Replace("Running Time:", ""),
                 Genre = HttpUtility.HtmlDecode(info[3]).Replace("Thể loại:", "").Replace("Genre:", ""),
                 Description = info[4],
-                Var = GetMovieVarName(node),
+                MovieWebId = GetMovieVarName(node),
                 IsNowShowing = isNowShowing,
-                Is3d = false,
+                Version = "",//need to arrange
             };
         }
 
@@ -242,11 +242,11 @@ namespace SGNMovies.Server.Providers
                                    select new Movie
                                    {
                                        Title = Helper.GetElementValue(movie, "MovieName"),
-                                       Var = Helper.GetElementValue(movie, "MovieNameVar"),
+                                       MovieWebId = Helper.GetElementValue(movie, "MovieNameVar"),
                                        TrailerUrl = Helper.GetElementValue(movie, "Trailer"),
                                        InfoUrl = Helper.GetElementValue(movie, "MovieInfoUrl"),
                                        Description = Helper.GetElementValue(movie, "ShortDesc"),
-                                       Is3d = Helper.ConvertFromStringToBool(Helper.GetElementValue(movie, "Is3d")),
+                                       Version = Helper.GetElementValue(movie, "Is3d"),
                                        IsNowShowing = Helper.ConvertFromStringToBool(Helper.GetElementValue(movie, "IsNew")),
                                    }).ToList();
             return results;
@@ -259,7 +259,7 @@ namespace SGNMovies.Server.Providers
             List<Movie> results = new List<Movie>();
             foreach (var tmp in tmps)
                 if (tmp != null)
-                    results.AddRange(sgns.Where(sgn => sgn.Var == tmp.Var));
+                    results.AddRange(sgns.Where(sgn => sgn.MovieWebId == tmp.MovieWebId));
 
             return results;
         }

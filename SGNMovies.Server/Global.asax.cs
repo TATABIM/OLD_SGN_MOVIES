@@ -6,9 +6,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Ninject;
 using Ninject.Web.Mvc;
-using SGNMovies.Server.Providers;
-using SGNMovies.Server.Models;
-using SGNMovies.Server.Controllers;
 
 namespace SGNMovies.Server
 {
@@ -29,29 +26,13 @@ namespace SGNMovies.Server
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                new { controller = "Cinema", action = "List", id = UrlParameter.Optional } // Parameter defaults
             );
 
         }
 
         protected void Application_Start()
         {
-          
-
-            //GalaxyProvider GP = new GalaxyProvider();
-
-            //GP.LoadAllMovies();
-
-            //GP.LoadComingSoonMovies();
-
-            //IEnumerable<Movie> results = GP.LoadNowShowingMovies();
-
-            //SGNMovieContainer isgnmovies = new SGNMovieContainer();
-            //MovieController movie = new MovieController(isgnmovies);
-            //movie.Update("galaxy");
-
-
-
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);

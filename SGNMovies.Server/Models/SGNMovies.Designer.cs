@@ -18,10 +18,10 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("SGNMovie", "CinemaSessionTime", "Cinema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SGNMovies.Server.Models.Cinema), "SessionTime", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SGNMovies.Server.Models.SessionTime))]
-[assembly: EdmRelationshipAttribute("SGNMovie", "CinemaProvider", "Cinema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SGNMovies.Server.Models.Cinema), "Provider", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SGNMovies.Server.Models.Provider))]
-[assembly: EdmRelationshipAttribute("SGNMovie", "MovieProvider", "Movie", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SGNMovies.Server.Models.Movie), "Provider", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SGNMovies.Server.Models.Provider))]
-[assembly: EdmRelationshipAttribute("SGNMovie", "MovieSessionTime", "Movie", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SGNMovies.Server.Models.Movie), "SessionTime", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SGNMovies.Server.Models.SessionTime))]
+[assembly: EdmRelationshipAttribute("SGNMovie", "FK_PCCinemas", "Cinema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SGNMovies.Server.Models.Cinema), "ProviderCinema", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SGNMovies.Server.Models.ProviderCinema), true)]
+[assembly: EdmRelationshipAttribute("SGNMovie", "FK_PCProvider", "Provider", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SGNMovies.Server.Models.Provider), "ProviderCinema", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SGNMovies.Server.Models.ProviderCinema), true)]
+[assembly: EdmRelationshipAttribute("SGNMovie", "FK_STMovie", "Movie", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SGNMovies.Server.Models.Movie), "SessionTime", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SGNMovies.Server.Models.SessionTime), true)]
+[assembly: EdmRelationshipAttribute("SGNMovie", "FK_STProviderCinema", "ProviderCinema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SGNMovies.Server.Models.ProviderCinema), "SessionTime", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SGNMovies.Server.Models.SessionTime), true)]
 
 #endregion
 
@@ -43,8 +43,6 @@ namespace SGNMovies.Server.Models
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
-
-           
         }
     
         /// <summary>
@@ -74,22 +72,6 @@ namespace SGNMovies.Server.Models
         #endregion
     
         #region ObjectSet Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<Provider> Providers
-        {
-            get
-            {
-                if ((_Providers == null))
-                {
-                    _Providers = base.CreateObjectSet<Provider>("Providers");
-                }
-                return _Providers;
-            }
-        }
-        private ObjectSet<Provider> _Providers;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -126,6 +108,38 @@ namespace SGNMovies.Server.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<ProviderCinema> ProviderCinemas
+        {
+            get
+            {
+                if ((_ProviderCinemas == null))
+                {
+                    _ProviderCinemas = base.CreateObjectSet<ProviderCinema>("ProviderCinemas");
+                }
+                return _ProviderCinemas;
+            }
+        }
+        private ObjectSet<ProviderCinema> _ProviderCinemas;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Provider> Providers
+        {
+            get
+            {
+                if ((_Providers == null))
+                {
+                    _Providers = base.CreateObjectSet<Provider>("Providers");
+                }
+                return _Providers;
+            }
+        }
+        private ObjectSet<Provider> _Providers;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<SessionTime> SessionTimes
         {
             get
@@ -143,14 +157,6 @@ namespace SGNMovies.Server.Models
         #region AddTo Methods
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Providers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToProviders(Provider provider)
-        {
-            base.AddObject("Providers", provider);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the Cinemas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToCinemas(Cinema cinema)
@@ -164,6 +170,22 @@ namespace SGNMovies.Server.Models
         public void AddToMovies(Movie movie)
         {
             base.AddObject("Movies", movie);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ProviderCinemas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToProviderCinemas(ProviderCinema providerCinema)
+        {
+            base.AddObject("ProviderCinemas", providerCinema);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Providers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToProviders(Provider provider)
+        {
+            base.AddObject("Providers", provider);
         }
     
         /// <summary>
@@ -196,24 +218,18 @@ namespace SGNMovies.Server.Models
         /// Create a new Cinema object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="displayName">Initial value of the DisplayName property.</param>
+        /// <param name="cinemaWebId">Initial value of the CinemaWebId property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
         /// <param name="address">Initial value of the Address property.</param>
         /// <param name="phone">Initial value of the Phone property.</param>
-        /// <param name="latitude">Initial value of the Latitude property.</param>
-        /// <param name="longitude">Initial value of the Longitude property.</param>
-        /// <param name="name">Initial value of the Name property.</param>
-        /// <param name="webId">Initial value of the WebId property.</param>
-        public static Cinema CreateCinema(global::System.Int32 id, global::System.String displayName, global::System.String address, global::System.String phone, global::System.Double latitude, global::System.Double longitude, global::System.String name, global::System.Int32 webId)
+        public static Cinema CreateCinema(global::System.Int32 id, global::System.String cinemaWebId, global::System.String name, global::System.String address, global::System.String phone)
         {
             Cinema cinema = new Cinema();
             cinema.Id = id;
-            cinema.DisplayName = displayName;
+            cinema.CinemaWebId = cinemaWebId;
+            cinema.Name = name;
             cinema.Address = address;
             cinema.Phone = phone;
-            cinema.Latitude = latitude;
-            cinema.Longitude = longitude;
-            cinema.Name = name;
-            cinema.WebId = webId;
             return cinema;
         }
 
@@ -252,24 +268,48 @@ namespace SGNMovies.Server.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String DisplayName
+        public global::System.String CinemaWebId
         {
             get
             {
-                return _DisplayName;
+                return _CinemaWebId;
             }
             set
             {
-                OnDisplayNameChanging(value);
-                ReportPropertyChanging("DisplayName");
-                _DisplayName = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("DisplayName");
-                OnDisplayNameChanged();
+                OnCinemaWebIdChanging(value);
+                ReportPropertyChanging("CinemaWebId");
+                _CinemaWebId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CinemaWebId");
+                OnCinemaWebIdChanged();
             }
         }
-        private global::System.String _DisplayName;
-        partial void OnDisplayNameChanging(global::System.String value);
-        partial void OnDisplayNameChanged();
+        private global::System.String _CinemaWebId;
+        partial void OnCinemaWebIdChanging(global::System.String value);
+        partial void OnCinemaWebIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -322,9 +362,9 @@ namespace SGNMovies.Server.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Double Latitude
+        public Nullable<global::System.Double> Latitude
         {
             get
             {
@@ -339,16 +379,16 @@ namespace SGNMovies.Server.Models
                 OnLatitudeChanged();
             }
         }
-        private global::System.Double _Latitude;
-        partial void OnLatitudeChanging(global::System.Double value);
+        private Nullable<global::System.Double> _Latitude;
+        partial void OnLatitudeChanging(Nullable<global::System.Double> value);
         partial void OnLatitudeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Double Longitude
+        public Nullable<global::System.Double> Longitude
         {
             get
             {
@@ -363,8 +403,8 @@ namespace SGNMovies.Server.Models
                 OnLongitudeChanged();
             }
         }
-        private global::System.Double _Longitude;
-        partial void OnLongitudeChanging(global::System.Double value);
+        private Nullable<global::System.Double> _Longitude;
+        partial void OnLongitudeChanging(Nullable<global::System.Double> value);
         partial void OnLongitudeChanged();
     
         /// <summary>
@@ -394,50 +434,26 @@ namespace SGNMovies.Server.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String Name
+        public global::System.String MapUrl
         {
             get
             {
-                return _Name;
+                return _MapUrl;
             }
             set
             {
-                OnNameChanging(value);
-                ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Name");
-                OnNameChanged();
+                OnMapUrlChanging(value);
+                ReportPropertyChanging("MapUrl");
+                _MapUrl = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("MapUrl");
+                OnMapUrlChanged();
             }
         }
-        private global::System.String _Name;
-        partial void OnNameChanging(global::System.String value);
-        partial void OnNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 WebId
-        {
-            get
-            {
-                return _WebId;
-            }
-            set
-            {
-                OnWebIdChanging(value);
-                ReportPropertyChanging("WebId");
-                _WebId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("WebId");
-                OnWebIdChanged();
-            }
-        }
-        private global::System.Int32 _WebId;
-        partial void OnWebIdChanging(global::System.Int32 value);
-        partial void OnWebIdChanged();
+        private global::System.String _MapUrl;
+        partial void OnMapUrlChanging(global::System.String value);
+        partial void OnMapUrlChanged();
 
         #endregion
     
@@ -449,40 +465,18 @@ namespace SGNMovies.Server.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "CinemaSessionTime", "SessionTime")]
-        public EntityCollection<SessionTime> SessionTimes
+        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "FK_PCCinemas", "ProviderCinema")]
+        public EntityCollection<ProviderCinema> ProviderCinemas
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SessionTime>("SGNMovie.CinemaSessionTime", "SessionTime");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ProviderCinema>("SGNMovie.FK_PCCinemas", "ProviderCinema");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SessionTime>("SGNMovie.CinemaSessionTime", "SessionTime", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "CinemaProvider", "Provider")]
-        public EntityCollection<Provider> Providers
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Provider>("SGNMovie.CinemaProvider", "Provider");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Provider>("SGNMovie.CinemaProvider", "Provider", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ProviderCinema>("SGNMovie.FK_PCCinemas", "ProviderCinema", value);
                 }
             }
         }
@@ -504,15 +498,15 @@ namespace SGNMovies.Server.Models
         /// Create a new Movie object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="var">Initial value of the Var property.</param>
+        /// <param name="movieWebId">Initial value of the MovieWebId property.</param>
         /// <param name="title">Initial value of the Title property.</param>
         /// <param name="isNowShowing">Initial value of the IsNowShowing property.</param>
         /// <param name="infoUrl">Initial value of the InfoUrl property.</param>
-        public static Movie CreateMovie(global::System.Int32 id, global::System.String var, global::System.String title, global::System.Boolean isNowShowing, global::System.String infoUrl)
+        public static Movie CreateMovie(global::System.Int32 id, global::System.String movieWebId, global::System.String title, global::System.Boolean isNowShowing, global::System.String infoUrl)
         {
             Movie movie = new Movie();
             movie.Id = id;
-            movie.Var = var;
+            movie.MovieWebId = movieWebId;
             movie.Title = title;
             movie.IsNowShowing = isNowShowing;
             movie.InfoUrl = infoUrl;
@@ -554,24 +548,24 @@ namespace SGNMovies.Server.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Var
+        public global::System.String MovieWebId
         {
             get
             {
-                return _Var;
+                return _MovieWebId;
             }
             set
             {
-                OnVarChanging(value);
-                ReportPropertyChanging("Var");
-                _Var = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Var");
-                OnVarChanged();
+                OnMovieWebIdChanging(value);
+                ReportPropertyChanging("MovieWebId");
+                _MovieWebId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("MovieWebId");
+                OnMovieWebIdChanged();
             }
         }
-        private global::System.String _Var;
-        partial void OnVarChanging(global::System.String value);
-        partial void OnVarChanged();
+        private global::System.String _MovieWebId;
+        partial void OnMovieWebIdChanging(global::System.String value);
+        partial void OnMovieWebIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -770,24 +764,24 @@ namespace SGNMovies.Server.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> Is3d
+        public global::System.String Version
         {
             get
             {
-                return _Is3d;
+                return _Version;
             }
             set
             {
-                OnIs3dChanging(value);
-                ReportPropertyChanging("Is3d");
-                _Is3d = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Is3d");
-                OnIs3dChanged();
+                OnVersionChanging(value);
+                ReportPropertyChanging("Version");
+                _Version = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Version");
+                OnVersionChanged();
             }
         }
-        private Nullable<global::System.Boolean> _Is3d;
-        partial void OnIs3dChanging(Nullable<global::System.Boolean> value);
-        partial void OnIs3dChanged();
+        private global::System.String _Version;
+        partial void OnVersionChanging(global::System.String value);
+        partial void OnVersionChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -895,40 +889,18 @@ namespace SGNMovies.Server.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "MovieProvider", "Provider")]
-        public EntityCollection<Provider> Providers
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Provider>("SGNMovie.MovieProvider", "Provider");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Provider>("SGNMovie.MovieProvider", "Provider", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "MovieSessionTime", "SessionTime")]
+        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "FK_STMovie", "SessionTime")]
         public EntityCollection<SessionTime> SessionTimes
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SessionTime>("SGNMovie.MovieSessionTime", "SessionTime");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SessionTime>("SGNMovie.FK_STMovie", "SessionTime");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SessionTime>("SGNMovie.MovieSessionTime", "SessionTime", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SessionTime>("SGNMovie.FK_STMovie", "SessionTime", value);
                 }
             }
         }
@@ -1049,16 +1021,148 @@ namespace SGNMovies.Server.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "CinemaProvider", "Cinema")]
+        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "FK_PCProvider", "ProviderCinema")]
+        public EntityCollection<ProviderCinema> ProviderCinemas
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ProviderCinema>("SGNMovie.FK_PCProvider", "ProviderCinema");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ProviderCinema>("SGNMovie.FK_PCProvider", "ProviderCinema", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SGNMovie", Name="ProviderCinema")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ProviderCinema : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ProviderCinema object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="provider_Id">Initial value of the Provider_Id property.</param>
+        /// <param name="cinema_Id">Initial value of the Cinema_Id property.</param>
+        public static ProviderCinema CreateProviderCinema(global::System.Int32 id, global::System.Int32 provider_Id, global::System.Int32 cinema_Id)
+        {
+            ProviderCinema providerCinema = new ProviderCinema();
+            providerCinema.Id = id;
+            providerCinema.Provider_Id = provider_Id;
+            providerCinema.Cinema_Id = cinema_Id;
+            return providerCinema;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Provider_Id
+        {
+            get
+            {
+                return _Provider_Id;
+            }
+            set
+            {
+                OnProvider_IdChanging(value);
+                ReportPropertyChanging("Provider_Id");
+                _Provider_Id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Provider_Id");
+                OnProvider_IdChanged();
+            }
+        }
+        private global::System.Int32 _Provider_Id;
+        partial void OnProvider_IdChanging(global::System.Int32 value);
+        partial void OnProvider_IdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Cinema_Id
+        {
+            get
+            {
+                return _Cinema_Id;
+            }
+            set
+            {
+                OnCinema_IdChanging(value);
+                ReportPropertyChanging("Cinema_Id");
+                _Cinema_Id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Cinema_Id");
+                OnCinema_IdChanged();
+            }
+        }
+        private global::System.Int32 _Cinema_Id;
+        partial void OnCinema_IdChanging(global::System.Int32 value);
+        partial void OnCinema_IdChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "FK_PCCinemas", "Cinema")]
         public Cinema Cinema
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Cinema>("SGNMovie.CinemaProvider", "Cinema").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Cinema>("SGNMovie.FK_PCCinemas", "Cinema").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Cinema>("SGNMovie.CinemaProvider", "Cinema").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Cinema>("SGNMovie.FK_PCCinemas", "Cinema").Value = value;
             }
         }
         /// <summary>
@@ -1070,13 +1174,13 @@ namespace SGNMovies.Server.Models
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Cinema>("SGNMovie.CinemaProvider", "Cinema");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Cinema>("SGNMovie.FK_PCCinemas", "Cinema");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Cinema>("SGNMovie.CinemaProvider", "Cinema", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Cinema>("SGNMovie.FK_PCCinemas", "Cinema", value);
                 }
             }
         }
@@ -1087,16 +1191,16 @@ namespace SGNMovies.Server.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "MovieProvider", "Movie")]
-        public Movie Movie
+        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "FK_PCProvider", "Provider")]
+        public Provider Provider
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Movie>("SGNMovie.MovieProvider", "Movie").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Provider>("SGNMovie.FK_PCProvider", "Provider").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Movie>("SGNMovie.MovieProvider", "Movie").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Provider>("SGNMovie.FK_PCProvider", "Provider").Value = value;
             }
         }
         /// <summary>
@@ -1104,17 +1208,39 @@ namespace SGNMovies.Server.Models
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<Movie> MovieReference
+        public EntityReference<Provider> ProviderReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Movie>("SGNMovie.MovieProvider", "Movie");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Provider>("SGNMovie.FK_PCProvider", "Provider");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Movie>("SGNMovie.MovieProvider", "Movie", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Provider>("SGNMovie.FK_PCProvider", "Provider", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "FK_STProviderCinema", "SessionTime")]
+        public EntityCollection<SessionTime> SessionTimes
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SessionTime>("SGNMovie.FK_STProviderCinema", "SessionTime");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SessionTime>("SGNMovie.FK_STProviderCinema", "SessionTime", value);
                 }
             }
         }
@@ -1136,12 +1262,16 @@ namespace SGNMovies.Server.Models
         /// Create a new SessionTime object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="providerCinema_Id">Initial value of the ProviderCinema_Id property.</param>
+        /// <param name="movie_Id">Initial value of the Movie_Id property.</param>
         /// <param name="date">Initial value of the Date property.</param>
         /// <param name="time">Initial value of the Time property.</param>
-        public static SessionTime CreateSessionTime(global::System.Int32 id, global::System.String date, global::System.String time)
+        public static SessionTime CreateSessionTime(global::System.Int32 id, global::System.Int32 providerCinema_Id, global::System.Int32 movie_Id, global::System.String date, global::System.String time)
         {
             SessionTime sessionTime = new SessionTime();
             sessionTime.Id = id;
+            sessionTime.ProviderCinema_Id = providerCinema_Id;
+            sessionTime.Movie_Id = movie_Id;
             sessionTime.Date = date;
             sessionTime.Time = time;
             return sessionTime;
@@ -1176,6 +1306,54 @@ namespace SGNMovies.Server.Models
         private global::System.Int32 _Id;
         partial void OnIdChanging(global::System.Int32 value);
         partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ProviderCinema_Id
+        {
+            get
+            {
+                return _ProviderCinema_Id;
+            }
+            set
+            {
+                OnProviderCinema_IdChanging(value);
+                ReportPropertyChanging("ProviderCinema_Id");
+                _ProviderCinema_Id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ProviderCinema_Id");
+                OnProviderCinema_IdChanged();
+            }
+        }
+        private global::System.Int32 _ProviderCinema_Id;
+        partial void OnProviderCinema_IdChanging(global::System.Int32 value);
+        partial void OnProviderCinema_IdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Movie_Id
+        {
+            get
+            {
+                return _Movie_Id;
+            }
+            set
+            {
+                OnMovie_IdChanging(value);
+                ReportPropertyChanging("Movie_Id");
+                _Movie_Id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Movie_Id");
+                OnMovie_IdChanged();
+            }
+        }
+        private global::System.Int32 _Movie_Id;
+        partial void OnMovie_IdChanging(global::System.Int32 value);
+        partial void OnMovie_IdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1235,16 +1413,16 @@ namespace SGNMovies.Server.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "CinemaSessionTime", "Cinema")]
-        public Cinema Cinema
+        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "FK_STMovie", "Movie")]
+        public Movie Movy
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Cinema>("SGNMovie.CinemaSessionTime", "Cinema").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Movie>("SGNMovie.FK_STMovie", "Movie").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Cinema>("SGNMovie.CinemaSessionTime", "Cinema").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Movie>("SGNMovie.FK_STMovie", "Movie").Value = value;
             }
         }
         /// <summary>
@@ -1252,17 +1430,17 @@ namespace SGNMovies.Server.Models
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<Cinema> CinemaReference
+        public EntityReference<Movie> MovyReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Cinema>("SGNMovie.CinemaSessionTime", "Cinema");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Movie>("SGNMovie.FK_STMovie", "Movie");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Cinema>("SGNMovie.CinemaSessionTime", "Cinema", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Movie>("SGNMovie.FK_STMovie", "Movie", value);
                 }
             }
         }
@@ -1273,16 +1451,16 @@ namespace SGNMovies.Server.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "MovieSessionTime", "Movie")]
-        public Movie Movie
+        [EdmRelationshipNavigationPropertyAttribute("SGNMovie", "FK_STProviderCinema", "ProviderCinema")]
+        public ProviderCinema ProviderCinema
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Movie>("SGNMovie.MovieSessionTime", "Movie").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ProviderCinema>("SGNMovie.FK_STProviderCinema", "ProviderCinema").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Movie>("SGNMovie.MovieSessionTime", "Movie").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ProviderCinema>("SGNMovie.FK_STProviderCinema", "ProviderCinema").Value = value;
             }
         }
         /// <summary>
@@ -1290,17 +1468,17 @@ namespace SGNMovies.Server.Models
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<Movie> MovieReference
+        public EntityReference<ProviderCinema> ProviderCinemaReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Movie>("SGNMovie.MovieSessionTime", "Movie");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ProviderCinema>("SGNMovie.FK_STProviderCinema", "ProviderCinema");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Movie>("SGNMovie.MovieSessionTime", "Movie", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ProviderCinema>("SGNMovie.FK_STProviderCinema", "ProviderCinema", value);
                 }
             }
         }

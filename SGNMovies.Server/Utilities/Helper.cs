@@ -8,19 +8,19 @@ namespace SGNMovies.Server.Utilities
 {
     public static class Helper
     {
-        public static string GetAttributeValue(XElement element, string attributeName)
-        {
-            string result = string.Empty;
-            if (element != null)
-            {
-                var attribute = element.Attribute(attributeName);
-                if (attribute != null)
-                {
-                    result = attribute.Value;
-                }
-            }
-            return result;
-        }
+        //public static string GetAttributeValue(XElement element, string attributeName)
+        //{
+        //    string result = string.Empty;
+        //    if (element != null)
+        //    {
+        //        var attribute = element.Attribute(attributeName);
+        //        if (attribute != null)
+        //        {
+        //            result = attribute.Value;
+        //        }
+        //    }
+        //    return result;
+        //}
 
         public static string GetElementValue(XElement element, string elementName)
         {
@@ -50,68 +50,53 @@ namespace SGNMovies.Server.Utilities
             return xdoc;
         }
 
-        public static Movie GetMovieObject(Movie m)
+        public static Movie GetMovieObject(Movie obj)
         {
             return new Movie
                        {
-                           Title = m.Title,
-                           Director = m.Director,
-                           Duration = m.Duration,
-                           Genre = m.Genre,
-                           Cast = m.Cast,
-                           Description = m.Description,
-                           Var = m.Var,
-                           InfoUrl = m.InfoUrl,
-                           ImageUrl = m.ImageUrl,
-                           TrailerUrl = m.TrailerUrl,
-                           Is3d = m.Is3d,
-                           IsNowShowing = m.IsNowShowing,
-                           Language = m.Language,
-                           Producer = m.Producer,
-                           Id = m.Id
+                           Id = obj.Id,
+                           MovieWebId = obj.MovieWebId,
+                           Title = obj.Title,
+                           Director = obj.Director,
+                           Duration = obj.Duration,
+                           Description = obj.Description,
+                           Genre = obj.Genre,
+                           Cast = obj.Cast,
+                           Language = obj.Language,
+                           Producer = obj.Producer,
+                           Version = obj.Version,
+                           IsNowShowing = obj.IsNowShowing,
+                           InfoUrl = obj.InfoUrl,
+                           ImageUrl = obj.ImageUrl,
+                           TrailerUrl = obj.TrailerUrl,
                        };
         }
 
-        public static Cinema GetCinemaObject(Cinema c)
+        public static Cinema GetCinemaObject(Cinema obj)
         {
-            /*return new Cinema
+            return new Cinema
                        {
-                           Id = c.Id,
-                           Name = c.Name,
-                           DisplayName = c.DisplayName,
-                           Address = c.Address,
-                           Phone = c.Phone,
-                           Latitude = c.Latitude,
-                           Longitude = c.Longitude,
-                           ImageUrl = c.ImageUrl,
-                           WebId = 1,
-
-                       };*/
-
-            Cinema cinema = new Cinema();
-            cinema.Id = c.Id;
-            cinema.Name = c.Name;
-            cinema.DisplayName = c.DisplayName;
-            cinema.Address = cinema.Address;
-            cinema.Phone = c.Phone;
-            cinema.Latitude = c.Latitude;
-            cinema.Longitude = c.Longitude;
-            cinema.ImageUrl = c.ImageUrl;
-            cinema.WebId = 1;
-
-            return cinema;
-
+                           Id = obj.Id,
+                           CinemaWebId = obj.CinemaWebId,
+                           Name = obj.Name,
+                           Address = obj.Address,
+                           Phone = obj.Phone,
+                           Latitude = obj.Latitude,
+                           Longitude = obj.Longitude,
+                           ImageUrl = obj.ImageUrl,
+                           MapUrl = obj.MapUrl,
+                       };
         }
 
-        public static SessionTime GetSessionTimeObject(SessionTime s)
+        public static SessionTime GetSessionTimeObject(SessionTime obj)
         {
             return new SessionTime
             {
-                Id = s.Id,
-                Date = s.Date,
-                Time = s.Time,
-                Cinema = s.Cinema,
-                Movie = s.Movie
+                Id = obj.Id,
+                //ProviderCinema = obj.ProviderCinema,
+                //Movie = obj.Movie,
+                Date = obj.Date,
+                Time = obj.Time,
             };
         }
     }

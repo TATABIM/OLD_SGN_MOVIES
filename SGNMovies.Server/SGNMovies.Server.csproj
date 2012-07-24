@@ -88,15 +88,13 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectMVC3.cs" />
     <Compile Include="Controllers\CinemaController.cs" />
-    <Compile Include="Controllers\GetSessionController.cs" />
-    <Compile Include="Controllers\helloController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\IContentProvider.cs" />
-    <Compile Include="Models\ContentProviderFactory.cs" />
+    <Compile Include="Providers\IContentProvider.cs" />
+    <Compile Include="Providers\ContentProviderFactory.cs" />
     <Compile Include="Models\ISGNMovies.cs" />
     <Compile Include="Models\SGNMovies.cs" />
     <Compile Include="Models\SGNMovies.Designer.cs">
@@ -114,15 +112,17 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\SGNMovies.edmx.sql" />
-    <Content Include="Views\Shared\Home.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Models\Cinemas.sql" />
+    <Content Include="Models\SGNMovies_Drop.edmx.sql" />
+    <Content Include="Models\SGNMovies_Create.edmx.sql" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -166,7 +166,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>1614</DevelopmentServerPort>
+          <DevelopmentServerPort>57024</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

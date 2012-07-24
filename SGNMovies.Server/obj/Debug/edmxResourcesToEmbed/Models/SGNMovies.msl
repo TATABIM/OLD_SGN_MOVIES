@@ -1,91 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="SGNMovieStoreContainer" CdmEntityContainer="SGNMovieContainer">
-    <EntitySetMapping Name="Providers">
-      <EntityTypeMapping TypeName="IsTypeOf(SGNMovie.Provider)">
-        <MappingFragment StoreEntitySet="Providers">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="HostUrl" ColumnName="HostUrl" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Cinemas">
-      <EntityTypeMapping TypeName="IsTypeOf(SGNMovie.Cinema)">
+      <EntityTypeMapping TypeName="SGNMovie.Cinema">
         <MappingFragment StoreEntitySet="Cinemas">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="MapUrl" ColumnName="MapUrl" />
           <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="WebId" ColumnName="WebId" />
+          <ScalarProperty Name="CinemaWebId" ColumnName="CinemaWebId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Movies">
-      <EntityTypeMapping TypeName="IsTypeOf(SGNMovie.Movie)">
+      <EntityTypeMapping TypeName="SGNMovie.Movie">
         <MappingFragment StoreEntitySet="Movies">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Var" ColumnName="Var" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="Director" ColumnName="Director" />
-          <ScalarProperty Name="Duration" ColumnName="Duration" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="Genre" ColumnName="Genre" />
-          <ScalarProperty Name="Cast" ColumnName="Cast" />
-          <ScalarProperty Name="Language" ColumnName="Language" />
-          <ScalarProperty Name="Producer" ColumnName="Producer" />
-          <ScalarProperty Name="Is3d" ColumnName="Is3d" />
-          <ScalarProperty Name="IsNowShowing" ColumnName="IsNowShowing" />
-          <ScalarProperty Name="InfoUrl" ColumnName="InfoUrl" />
-          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
           <ScalarProperty Name="TrailerUrl" ColumnName="TrailerUrl" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+          <ScalarProperty Name="InfoUrl" ColumnName="InfoUrl" />
+          <ScalarProperty Name="IsNowShowing" ColumnName="IsNowShowing" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="Producer" ColumnName="Producer" />
+          <ScalarProperty Name="Language" ColumnName="Language" />
+          <ScalarProperty Name="Cast" ColumnName="Cast" />
+          <ScalarProperty Name="Genre" ColumnName="Genre" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Director" ColumnName="Director" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="MovieWebId" ColumnName="MovieWebId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProviderCinemas">
+      <EntityTypeMapping TypeName="SGNMovie.ProviderCinema">
+        <MappingFragment StoreEntitySet="ProviderCinemas">
+          <ScalarProperty Name="Cinema_Id" ColumnName="Cinema_Id" />
+          <ScalarProperty Name="Provider_Id" ColumnName="Provider_Id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Providers">
+      <EntityTypeMapping TypeName="SGNMovie.Provider">
+        <MappingFragment StoreEntitySet="Providers">
+          <ScalarProperty Name="HostUrl" ColumnName="HostUrl" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="SessionTimes">
-      <EntityTypeMapping TypeName="IsTypeOf(SGNMovie.SessionTime)">
+      <EntityTypeMapping TypeName="SGNMovie.SessionTime">
         <MappingFragment StoreEntitySet="SessionTimes">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
+          <ScalarProperty Name="ProviderCinema_Id" ColumnName="ProviderCinema_Id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="CinemaSessionTime" TypeName="SGNMovie.CinemaSessionTime" StoreEntitySet="SessionTimes">
-      <EndProperty Name="Cinema">
-        <ScalarProperty Name="Id" ColumnName="Cinema_Id" />
-      </EndProperty>
-      <EndProperty Name="SessionTime">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="CinemaProvider" TypeName="SGNMovie.CinemaProvider" StoreEntitySet="Providers">
-      <EndProperty Name="Cinema">
-        <ScalarProperty Name="Id" ColumnName="Cinema_Id" />
-      </EndProperty>
-      <EndProperty Name="Provider">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="MovieProvider" TypeName="SGNMovie.MovieProvider" StoreEntitySet="Providers">
-      <EndProperty Name="Movie">
-        <ScalarProperty Name="Id" ColumnName="Movie_Id" />
-      </EndProperty>
-      <EndProperty Name="Provider">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="MovieSessionTime" TypeName="SGNMovie.MovieSessionTime" StoreEntitySet="SessionTimes">
-      <EndProperty Name="Movie">
-        <ScalarProperty Name="Id" ColumnName="Movie_Id" />
-      </EndProperty>
-      <EndProperty Name="SessionTime">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>
